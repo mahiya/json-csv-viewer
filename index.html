@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSV / JSON / JSONL ビューア</title>
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="file-bar" class="file-bar" hidden>
+    <span id="file-info" class="file-info"></span>
+    <button id="back-button" type="button">入力に戻る</button>
+  </header>
+  <main id="app">
+    <section id="empty-state" class="empty-state">
+      <p>CSV / JSON / JSONL ファイルをドロップ</p>
+      <button id="select-button" type="button">ファイルを選択</button>
+      <input id="file-input" type="file" accept=".csv,.tsv,.json,.jsonl,.ndjson" hidden>
+      <textarea id="text-input" class="text-input data-font" placeholder="テキストを貼り付け" aria-label="テキスト" spellcheck="false"></textarea>
+      <div class="text-actions">
+        <select id="type-select" aria-label="種別">
+          <option value="auto">自動判定</option>
+          <option value="csv">CSV</option>
+          <option value="json">JSON</option>
+          <option value="jsonl">JSONL</option>
+        </select>
+        <button id="render-button" type="button" title="Ctrl+Enter / Command+Enter">表示</button>
+      </div>
+    </section>
+    <section id="error-message" class="error-message" role="alert" hidden></section>
+    <section id="viewer" class="viewer" hidden></section>
+  </main>
+  <div id="drop-indicator" class="drop-indicator" hidden>ここにドロップ</div>
+  <script src="lib/parsers.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

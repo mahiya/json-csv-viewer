@@ -1,0 +1,421 @@
+:root {
+  color-scheme: dark;
+  --background: #11151a;
+  --surface: #1a2027;
+  --surface-raised: #222a33;
+  --border: #394654;
+  --border-strong: #64788d;
+  --text: #e6edf3;
+  --muted: #9ba9b7;
+  --accent: #67b7e8;
+  --error: #ff8a8a;
+  --string: #a9d18e;
+  --number: #79c0ff;
+  --boolean: #d2a8ff;
+  --null: #8b949e;
+  --key: #e3b341;
+}
+
+/* 画面全体のダークモードと基本レイアウトを定義します。 */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* display を指定した要素でも hidden 属性で確実に非表示にします。 */
+[hidden] {
+  display: none !important;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+select {
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  color: var(--text);
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+select {
+  padding: 6px 8px;
+}
+
+button:hover:not(:disabled),
+button:focus-visible,
+select:hover,
+select:focus-visible {
+  border-color: var(--accent);
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+/* 読み込み済みデータの概要と戻るボタンを 1 行で表示します。 */
+.file-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 42px;
+  padding: 5px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.file-info {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-bar button {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+}
+
+#app {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* 未読み込み時の操作だけを中央に配置します。 */
+.empty-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: safe center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  overflow: auto;
+}
+
+.empty-state p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* 貼り付け用のテキスト欄と、その下の操作列を同じ幅にそろえます。 */
+.text-input {
+  flex: 0 0 auto;
+  width: min(760px, 100%);
+  height: 40vh;
+  min-height: 160px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  outline: none;
+  background: var(--surface);
+  color: var(--text);
+  resize: vertical;
+}
+
+.text-input:focus {
+  border-color: var(--accent);
+}
+
+.text-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  width: min(760px, 100%);
+}
+
+.drop-indicator {
+  position: fixed;
+  z-index: 100;
+  inset: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--accent);
+  background: rgb(17 21 26 / 82%);
+  color: var(--accent);
+  pointer-events: none;
+}
+
+/* エラーは画面内に固定した領域として表示します。 */
+.error-message {
+  margin: 16px;
+  padding: 12px;
+  border: 1px solid #7f3a3a;
+  border-radius: 4px;
+  background: #2b1818;
+  color: var(--error);
+  white-space: pre-wrap;
+}
+
+.viewer {
+  height: 100%;
+  min-height: 0;
+}
+
+.data-font {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+}
+
+/* CSV の操作列とページングを配置します。 */
+.csv-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.toolbar,
+.pagination {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.pagination {
+  justify-content: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 0;
+}
+
+.toolbar input {
+  width: min(420px, 55vw);
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  outline: none;
+  background: var(--background);
+  color: var(--text);
+}
+
+.toolbar input:focus {
+  border-color: var(--accent);
+}
+
+.count-label,
+.page-label,
+.tree-notice,
+.jsonl-notice {
+  color: var(--muted);
+}
+
+.table-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+th,
+td {
+  height: 34px;
+  padding: 6px 10px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+thead th {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  background: var(--surface-raised);
+}
+
+thead button {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.row-number {
+  position: sticky;
+  z-index: 1;
+  left: 0;
+  min-width: 64px;
+  background: var(--surface);
+  color: var(--muted);
+  text-align: right;
+}
+
+thead .row-number {
+  z-index: 3;
+  background: var(--surface-raised);
+}
+
+.numeric {
+  text-align: right;
+}
+
+.cell-value {
+  display: block;
+  max-width: 440px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.cell-value.expanded {
+  max-width: 800px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* JSON ツリーと JSONL カードの表示領域を定義します。 */
+.json-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.tree-scroll,
+.jsonl-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px 16px 24px;
+}
+
+.tree-node {
+  min-height: 24px;
+  line-height: 24px;
+}
+
+.tree-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: max-content;
+}
+
+.tree-toggle {
+  width: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  text-align: center;
+}
+
+.tree-spacer {
+  display: inline-block;
+  width: 22px;
+  flex: 0 0 22px;
+}
+
+.tree-children {
+  margin-left: 22px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
+}
+
+.tree-more {
+  margin: 5px 0;
+}
+
+.tree-key {
+  color: var(--key);
+}
+
+.tree-string {
+  color: var(--string);
+  white-space: pre-wrap;
+}
+
+.tree-number {
+  color: var(--number);
+}
+
+.tree-boolean {
+  color: var(--boolean);
+}
+
+.tree-null,
+.tree-summary,
+.tree-bracket {
+  color: var(--null);
+}
+
+.jsonl-card {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.jsonl-card h2 {
+  margin: 0 0 7px;
+  font: inherit;
+  color: var(--muted);
+}
+
+.jsonl-error {
+  color: var(--error);
+  white-space: pre-wrap;
+}
+
+.jsonl-raw {
+  margin-top: 8px;
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .toolbar {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .toolbar input {
+    width: 100%;
+  }
+
+  .cell-value {
+    max-width: 260px;
+  }
+}

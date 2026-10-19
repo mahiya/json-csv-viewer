@@ -1,0 +1,14 @@
+{
+  "project": "json-csv-reader",
+  "active": true,
+  "version": 1,
+  "settings": {
+    "theme": "dark",
+    "pageSize": 100,
+    "formats": ["CSV", "JSON", "JSONL"]
+  },
+  "items": [
+    { "id": 1, "name": "サンプル A" },
+    { "id": 2, "name": "サンプル B" }
+  ]
+}

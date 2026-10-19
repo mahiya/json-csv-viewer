@@ -1,0 +1,16 @@
+{"id":1,"name":"項目1","active":true}
+{"id":2,"name":"項目2","active":false}
+{"id":3,"name":"項目3","tags":["a","b"]}
+{"id":4,"name":"項目4","score":42}
+{"id":5,"name":"項目5","score":18.5}
+{"id":6,"name":"項目6","meta":{"group":"A"}}
+{"id":7,"name":"項目7","value":null}
+{"id":8,"name":"項目8","active":true}
+{"id":9,"name":"項目9","active":false}
+{"id":10,"name":"項目10","tags":[]}
+{"id":11,"name":"項目11","score":75}
+{"id":12,"name":"項目12","meta":{"group":"B"}}
+{"id":13,"name":"項目13","active":true}
+{"id":14,"name":"項目14","score":91}
+{"id":15,"name":"項目15","value":null}
+{"id":16,"name":"壊れた行"
